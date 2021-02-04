@@ -68,3 +68,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+About the app:
+1. All action buttons gets visible when you start making actions.
+2. Used localStorage to simulate save.
+3. undo/redo are available for only one previous action.
+4. save/cancel gets visible only if items has changed from original.
