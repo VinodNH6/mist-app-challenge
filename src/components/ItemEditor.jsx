@@ -10,7 +10,37 @@ const areItemsModified = (original, modified) => {
 };
 
 
-const flexColStyle = {display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'};
+const Items = ({items, selectedItem, onSelect}) => {
+    return (
+        <div>
+            <ul class="list-group">
+                {items && items.map(item =>  <li 
+                    class={`list-group-item ${selectedItem.id === item.id && selectedItem.name === item.name && 'active'}`} 
+                    onClick={() => onSelect(item)}>
+                        <b>{item.name}</b>
+                </li>)}
+            </ul>
+
+        </div>
+    );
+};
+
+const Actions = ({actions, onSelect}) => {
+    return (
+        <>
+            {actions.map(action => <button 
+                style={{margin: '0px 10px 0px 10px', opacity: !action.enabled ? 0.4 : 1}}
+                type="button" 
+                class={`btn btn-${action.type}`} 
+                onClick={() => onSelect(action.name)} 
+                disabled={!action.enabled}
+                >
+                    {action.name}
+            </button>)}
+        </>
+    );
+};
+
 
 const EachItem = ({selectedItem, onFieldChange}) => {
 
@@ -109,37 +139,6 @@ const EachItem = ({selectedItem, onFieldChange}) => {
 };
 
 
-const Items = ({items, selectedItem, onSelect}) => {
-    return (
-        <div>
-            <ul class="list-group">
-                {items && items.map(item =>  <li 
-                    class={`list-group-item ${selectedItem.id === item.id && selectedItem.name === item.name && 'active'}`} 
-                    onClick={() => onSelect(item)}>
-                        <b>{item.name}</b>
-                </li>)}
-            </ul>
-
-        </div>
-    );
-};
-
-const Actions = ({actions, onSelect}) => {
-    return (
-        <>
-            {actions.map(action => <button 
-                style={{margin: '0px 10px 0px 10px', opacity: !action.enabled ? 0.4 : 1}}
-                type="button" 
-                class={`btn btn-${action.type}`} 
-                onClick={() => onSelect(action.name)} 
-                disabled={!action.enabled}
-                >
-                    {action.name}
-            </button>)}
-        </>
-    );
-};
-
 const ItemEditor = () => {
     const [items, setItems] = useState(cachedItems);
     const [selectedItem, setSelectedItem] = useState(cachedItems[0]);
@@ -152,6 +151,7 @@ const ItemEditor = () => {
             localStorage.setItem('itemsJson', JSON.stringify(items));
             cachedItems = JSON.parse(localStorage.getItem('itemsJson'));
             setItems(cachedItems);
+            setSelectedItem(cachedItems[0]);
             setHistoryUndo('');
             setHistoryRedo('');
             setSave(false);
@@ -259,7 +259,7 @@ const ItemEditor = () => {
                 </div>
                 <div style={{width: '80%'}}>
                     <div style={{display: 'flex', justifyContent: 'flex-end', width: '100%', height: '100%'}}>
-                        <div style={{...flexColStyle, width: '100%', height: '100%'}}>
+                        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', width: '100%', height: '100%'}}>
                             <EachItem 
                                 selectedItem={selectedItem}
                                 onFieldChange={(curAction, prevAction) => {
