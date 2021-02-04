@@ -183,7 +183,6 @@ const ItemEditor = () => {
     };
 
     const onselectionchange = (history) => {
-        console.log(history);
         const selItem = history.data;
         setSelectedItem(items.filter(item => item.id === selItem.id && item.name === selItem.name)[0]);
     };
